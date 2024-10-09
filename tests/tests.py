@@ -1,22 +1,36 @@
-import pytest
-from main import solve_quadratic
+import unittest
+from main import solve_quadratic_equation
 
-def test_two_real_roots():
-    # Тест для уравнения с двумя реальными корнями: x^2 - 3x + 2 = 0
-    assert solve_quadratic(1, -3, 2) == (2.0, 1.0)
 
-def test_one_real_root():
-    # Тест для уравнения с одним реальным корнем: x^2 - 2x + 1 = 0
-    assert solve_quadratic(1, -2, 1) == (1.0,)
+class TestQuadraticEquationModule(unittest.TestCase):
+    def test_positive_discr(self):
+        self.assertEqual(solve_quadratic_equation(a=1, b=-4, c=-5), [5.0, -1.0])
 
-def test_no_real_roots():
-    # Тест для уравнения без реальных корней: x^2 + 1 = 0
-    assert solve_quadratic(1, 0, 1) is None
+    def test_zero_discr(self):
+        self.assertEqual(solve_quadratic_equation(a=2, b=-4, c=2), [1.0])
 
-def test_not_a_quadratic_equation():
-    # Тест для случая, когда уравнение не является квадратным (a=0): 2x + 1 = 0
-    assert solve_quadratic(0, 2, 1) == (-0.5,)
+    def test_negative_discr(self):
+        self.assertEqual(solve_quadratic_equation(a=2, b=-1, c=1), ["нет корней"])
 
-def test_zero_coefficients():
-    # Тест для случая, когда все коэффициенты равны нулю: 0x^2 + 0x + 0 = 0
-    assert solve_quadratic(0, 0, 0) is None
+    # hello
+    def test_zero_a(self):
+        self.assertEqual(solve_quadratic_equation(a=0, b=2, c=-4), [2.0])
+
+    def test_zero_a_zero_b(self):
+        self.assertEqual(solve_quadratic_equation(a=0, b=0, c=-4), ["не уравнение"])
+
+    def test_incorrect_arguments_type(self):
+        with self.assertRaises(TypeError):
+            solve_quadratic_equation(a="hello", b=2, c=-4)
+
+    def test_less_number_of_arguments(self):
+        with self.assertRaises(TypeError):
+            solve_quadratic_equation(b=2, c=-4)
+
+    def test_more_number_of_arguments(self):
+        with self.assertRaises(TypeError):
+            solve_quadratic_equation(a=2, b=2, c=2, dicr=0)
+
+
+if __name__ == '__main__':
+    unittest.main()
