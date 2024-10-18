@@ -1,35 +1,36 @@
 import unittest
-from main import quadratic_solver
+from main import solve_quadratic_equation
 
 
-class TestQuadraticSolver(unittest.TestCase):
-    def test_two_real_roots(self):
-        self.assertEqual(quadratic_solver(a=1, b=-4, c=-5), [5.0, -1.0])
+class TestQuadraticEquationModule(unittest.TestCase):
+    def test_positive_discr(self):
+        self.assertEqual(solve_quadratic_equation(a=1, b=-4, c=-5), [5.0, -1.0])
 
-    def test_one_real_root(self):
-        self.assertEqual(quadratic_solver(a=2, b=-4, c=2), [1.0])
+    def test_zero_discr(self):
+        self.assertEqual(solve_quadratic_equation(a=2, b=-4, c=2), [1.0])
 
-    def test_no_real_roots(self):
-        self.assertEqual(quadratic_solver(a=2, b=-1, c=1), ["нет корней"])
+    def test_negative_discr(self):
+        self.assertEqual(solve_quadratic_equation(a=2, b=-1, c=1), ["нет корней"])
 
-    def test_linear_equation(self):
-        self.assertEqual(quadratic_solver(a=0, b=2, c=-4), [2.0])
+    # hello
+    def test_zero_a(self):
+        self.assertEqual(solve_quadratic_equation(a=0, b=2, c=-4), [2.0])
 
-    def test_not_an_equation(self):
-        self.assertEqual(quadratic_solver(a=0, b=0, c=-4), ["не уравнение"])
+    def test_zero_a_zero_b(self):
+        self.assertEqual(solve_quadratic_equation(a=0, b=0, c=-4), ["не уравнение"])
 
-    def test_invalid_argument_types(self):
+    def test_incorrect_arguments_type(self):
         with self.assertRaises(TypeError):
-            quadratic_solver(a="invalid", b=2, c=-4)
+            solve_quadratic_equation(a="hello", b=2, c=-4)
 
-    def test_missing_arguments(self):
+    def test_less_number_of_arguments(self):
         with self.assertRaises(TypeError):
-            quadratic_solver(b=2, c=-4)
+            solve_quadratic_equation(b=2, c=-4)
 
-    def test_extra_arguments(self):
+    def test_more_number_of_arguments(self):
         with self.assertRaises(TypeError):
-            quadratic_solver(a=2, b=2, c=2, extra_param=0)
+            solve_quadratic_equation(a=2, b=2, c=2, dicr=0)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     unittest.main()
