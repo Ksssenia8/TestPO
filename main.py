@@ -1,37 +1,29 @@
 from math import sqrt
 
 
-def solve_quadratic_equation(a: float, b: float, c: float) -> list:
-    try:
-        if b == 0 and a == 0:
-            return ["не уравнение"]
+def quadratic_solver(a: float, b: float, c: float) -> list:
+    if a == 0:
+        return ["не уравнение"] if b == 0 else [-c / b]
 
-        if a == 0:
-            return [-c / b]
-
-        discr = b * b - 4 * a * c
-
-        if discr > 0:
-            x1 = (-b + sqrt(discr)) / (2 * a)
-            x2 = (-b - sqrt(discr)) / (2 * a)
-            return [x1, x2]
-        elif discr < 0:
-            return ["нет корней"]
-        elif discr == 0:
-            return [-b / (2 * a)]
-    except:
-        raise TypeError
+    discriminant = b ** 2 - 4 * a * c
+    if discriminant > 0:
+        root1 = (-b + sqrt(discriminant)) / (2 * a)
+        root2 = (-b - sqrt(discriminant)) / (2 * a)
+        return [root1, root2]
+    elif discriminant == 0:
+        return [-b / (2 * a)]
+    else:
+        return ["нет корней"]
 
 
 def main():
-    result = solve_quadratic_equation(1, -4, -5)
-
-    for i in range(len(result)):
-        if type(result[i]) == float:
-            print(f"x{i+1} = {result[i]}")
+    result = quadratic_solver(1, -4, -5)
+    for index, value in enumerate(result, start=1):
+        if isinstance(value, float):
+            print(f"x{index} = {value}")
         else:
-            print(f"{result[i]}")
+            print(f"{value}")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
